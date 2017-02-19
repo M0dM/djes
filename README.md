@@ -15,6 +15,10 @@ Simple django & elasticsearch sample project.
 
 `python manage.py migrate`
 
+## Prepare Elasticsearch data directory
+
+`mkdir es_data`
+
 ## Run project using docker
 
 `docker-compose up`
