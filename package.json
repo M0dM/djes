@@ -1,0 +1,26 @@
+{
+  "name": "djes",
+  "private": false,
+  "author": "Benoit Brayer",
+  "version": "0.1.0",
+  "description": "Simple django & elasticsearch sample project.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/M0dM/djes"
+  },
+  "license": "MIT",
+  "main": "",
+  "scripts": {
+    "lint": "flake8 . || true",
+    "sort": "isort -y || true",
+    "test": "py.test || true"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  },
+  "keywords": [
+    "django",
+    "elasticsearch",
+    "django-simple-elasticsearch"
+  ]
+}
