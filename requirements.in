@@ -1,4 +1,5 @@
 feedparser
 
 django
+django-bootstrap3
 django-simple-elasticsearch

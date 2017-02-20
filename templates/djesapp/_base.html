@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load static %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>
+      {% trans 'Sample django + elasticsearch application' %}
+    </title>
+    <!-- Css -->
+    <link href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}"
+          type="text/css"
+          rel="stylesheet"/>
+    <link href="{% static 'stylesheet.css' %}"
+          type="text/css"
+          rel="stylesheet"/>
+  </head>
+  <body>
+    {% include 'djesapp/_base_navbar.html' %}
+    <div id="container" class="container-fluid">
+      {% block content %}
+      {% endblock content %}
+    </div>
+  </body>
+</html>

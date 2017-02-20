@@ -1,0 +1,53 @@
+{% extends 'djesapp/_base.html' %}
+
+{% load i18n %}
+{% load bootstrap3 %}
+
+{% block content %}
+
+  <!-- Search form -->
+
+  <form class="well"
+        method="POST"
+        action="{% url 'app:search' %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="btn btn-primary"
+                type="submit"
+                name="action">
+          <span class="glyphicon glyphicon-plus"></span>
+          {% trans "Add Blog" %}
+        </button>
+  </form>
+
+  <!-- Blog list in a table -->
+
+  {% if blogs %}
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>{% trans 'Blog' %}</th>
+          <th>{% trans 'Article' %}</th>
+          <th>{% trans 'Terms' %}</th>
+        <tr>
+      </thead>
+      <tbody>
+        {% for article in articles %}
+          <tr>
+            <td>{{ article.blog }}</td>
+            <td>{{ article }}</td>
+            <td></td>
+          <tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="alert alert-info">
+      {% blocktrans %}
+      <b>No blog registered yet.</b><br />
+      Please start by adding a new blog using the form above.
+      {% endblocktrans %}
+    </p>
+  {% endif %}
+
+{% endblock content %}

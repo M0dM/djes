@@ -1,3 +1,5 @@
+# coding: utf-8
+
 """
 Django settings for djes project.
 
@@ -31,7 +33,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # Core django dependencies
     'django.contrib.staticfiles',
+
+    # External dependencies
+    'bootstrap3',
+    'simple_elasticsearch',
+
+    # Project dependencies
+    'djesapp',
 ]
 
 MIDDLEWARE = [
@@ -46,8 +56,8 @@ ROOT_URLCONF = 'djes.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': ['templates'],
+        'APP_DIRS': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -91,5 +101,70 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    join(BASE_DIR, 'node_modules'),
+    os.path.join(BASE_DIR, 'node_modules'),
+    os.path.join(BASE_DIR, 'static'),
 ]
+
+
+# Django simple elasticsearch settings
+ELASTICSEARCH_TYPE_CLASSES = [
+    'djes.models.Article',
+]
+
+ELASTICSEARCH_DEFAULT_INDEX_SETTINGS = {
+    "settings": {
+        "analysis": {
+            "tokenizer": {
+                "whitespace": {"type": "whitespace"}
+            },
+            "filter": {
+                "french_elision": {
+                    "type": "elision",
+                    "articles": ["l", "m", "t", "qu", "n", "s", "j", "d"]
+                },
+                "french_stop": {
+                    "type": "stop",
+                    "stopwords": ["ès", "vers", "a", "à", "afin", "ai", "ainsi", "après", "attendu",
+                                  "au", "aujourd", "auquel", "aussi", "autre", "autres", "aux",
+                                  "auxquelles", "auxquels", "avait", "avant", "avoir", "c", "ça",
+                                  "car", "ce", "ceci", "cela", "celle", "celles", "celui",
+                                  "cependant", "certain", "certaine", "certaines", "certains", "ces",
+                                  "cet", "cette", "ceux", "chez", "ci", "combien", "comme", "comment",
+                                  "concernant", "contre", "d", "dans", "de", "debout", "dedans",
+                                  "dehors", "delà", "depuis", "derrière", "des", "dès", "désormais",
+                                  "desquelles", "desquels", "dessous", "dessus", "devant", "devers",
+                                  "devra", "divers", "diverse", "diverses", "doit", "donc", "dont",
+                                  "du", "duquel", "durant", "elle", "elles", "en", "entre", "environ",
+                                  "est", "et", "etc", "été", "etre", "être", "eu", "eux", "excepté",
+                                  "hélas", "hormis", "hors", "hui", "il", "ils", "j", "je", "jusqu",
+                                  "jusque", "l", "la", "là", "laquelle", "le", "lequel", "les",
+                                  "lesquelles", "lesquels", "leur", "leurs", "lorsque", "lui", "ma",
+                                  "mais", "malgré", "me", "même", "mêmes", "merci", "mes", "mien",
+                                  "mienne", "miennes", "miens", "moi", "moins", "mon", "moyennant",
+                                  "n", "ne", "néanmoins", "ni", "non", "nos", "notre", "nôtre",
+                                  "nôtres", "nous", "ô", "on", "ont", "ou", "où", "outre", "par",
+                                  "parmi", "partant", "pas", "passé", "pendant", "plein", "plus",
+                                  "plusieurs", "pour", "pourquoi", "près", "proche", "puisque", "qu",
+                                  "quand", "que", "quel", "quelle", "quelles", "quels", "qui", "quoi",
+                                  "quoique", "revoici", "revoilà", "s", "sa", "sauf", "se", "selon",
+                                  "seront", "ses", "si", "sien", "sienne", "siennes", "siens", "sinon",
+                                  "soi", "soit", "son", "sont", "sous", "suivant", "sur", "ta", "te",
+                                  "tes", "tien", "tienne", "tiennes", "tiens", "toi", "ton", "tous",
+                                  "tout", "toute", "toutes", "tu", "un", "une", "va", "voici", "voilà",
+                                  "vos", "votre", "vôtre", "vôtres", "vous", "vu", "y"]
+                }
+            },
+            "analyzer": {
+                "custom_french_analyzer": {
+                    "tokenizer": "letter",
+                    "filter": ["asciifolding", "lowercase", "french_stop", "french_stem", "french_elision"]
+                },
+                "address": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": ["trim", "lowercase"]
+                }
+            }
+        }
+    }
+}
