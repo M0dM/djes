@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # External dependencies
-    'bootstrap3',
     'simple_elasticsearch',
 
     # Project dependencies

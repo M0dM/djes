@@ -1,0 +1,72 @@
+{% extends 'djesapp/_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+
+  <!-- Search form -->
+
+  <form class="well"
+        method="POST"
+        action="{% url 'app:search' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary"
+                type="submit"
+                name="action">
+          <span class="glyphicon glyphicon-search"></span>
+          {% trans "Search" %}
+        </button>
+  </form>
+
+  <!-- Article form -->
+
+  <form class="well"
+        method="POST"
+        action="{% url 'app:article' %}">
+        {% csrf_token %}
+        {{ article_form.as_p }}
+        <button class="btn btn-primary"
+                type="submit"
+                name="action">
+          <span class="glyphicon glyphicon-search"></span>
+          {% trans "Add article" %}
+        </button>
+  </form>
+
+  <!-- Articles matching in a table -->
+
+  {% if articles %}
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>{% trans 'Blog' %}</th>
+          <th>{% trans 'Article' %}</th>
+          <th class="table-actions">{% trans 'Actions' %}</th>
+        <tr>
+      </thead>
+      <tbody>
+        {% for article in articles %}
+          <tr>
+            <td>{{ article.blog }}</td>
+            <td>{{ article.name }}</td>
+            <td>
+              <a class="btn btn-danger"
+                 href="{% url 'app:delete_article' article.id %}">
+                 {% trans 'Delete' %}
+              </a>
+            </td>
+          <tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="alert alert-info">
+      {% blocktrans %}
+      <b>No article registered yet.</b><br />
+      Please start by adding a new article using the form above.
+      {% endblocktrans %}
+    </p>
+  {% endif %}
+
+{% endblock content %}

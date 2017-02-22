@@ -5,18 +5,24 @@ from django.conf.urls import (
 )
 
 from djesapp.views import (
+    ArticleCreateView,
+    ArticleDeleteView,
     BlogCreateView,
     BlogDeleteView,
-    HomeTemplateView,
     SearchArticleFormView
 )
 
 
 urlpatterns = [
-    url(  # Create & list blogs
-        r'^$',
-        HomeTemplateView.as_view(),
-        name="home"
+    url(  # Create & list articles
+        r'^article/create$',
+        ArticleCreateView.as_view(),
+        name="article"
+    ),
+    url(  # Delete article by id
+        r'^article/(?P<_id>[0-9]+)/delete$',
+        ArticleDeleteView.as_view(),
+        name="delete_article"
     ),
     url(  # Create & list blogs
         r'^blog/create$',
@@ -28,9 +34,9 @@ urlpatterns = [
         BlogDeleteView.as_view(),
         name="delete_blog"
     ),
-    url(  # Full text query search for articles
-        r'^article/search$',
+    url(  # Filter the article list
+        r'^$',
         SearchArticleFormView.as_view(),
         name="search"
-    ),
+    )
 ]
