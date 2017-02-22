@@ -1,0 +1,8 @@
+# Initialize ES index
+curl -XPUT 'localhost:9200/djes?pretty' -H 'Content-Type: application/json' -d'{"settings":{"number_of_shards":1}}'
+
+# Get the number of articles
+curl -XPOST 'http://localhost:9200/djes/article/_search?pretty=true' -d '{"query" : {  "match_all" : {} }}'
+
+# Simple search
+curl -XGET 'http://localhost:9200/djes/article/_search?pretty=true' -d '{ "query" : { "term" : { "name": "plip" }}}'

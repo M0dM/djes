@@ -58,7 +58,7 @@ class ArticleCreateView(CreateView):
     form_class = ArticleModelForm
     search_form_class = SearchArticleForm
     template_name = 'djesapp/article.html'
-    success_url = reverse_lazy("app:article")
+    success_url = reverse_lazy("app:search")
 
 
 class ArticleDeleteView(DeleteView):
@@ -66,7 +66,7 @@ class ArticleDeleteView(DeleteView):
 
     model = Article
     pk_url_kwarg = '_id'
-    success_url = reverse_lazy("app:article")
+    success_url = reverse_lazy("app:search")
 
     def get(self, request, *args, **kwargs):
         """Delete article entry on get request."""

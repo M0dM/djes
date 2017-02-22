@@ -106,6 +106,8 @@ STATICFILES_DIRS = [
 
 
 # Django simple elasticsearch settings
+ELASTICSEARCH_SERVER = ['http://127.0.0.1:9200']
+
 ELASTICSEARCH_TYPE_CLASSES = [
     'djes.models.Article',
 ]
