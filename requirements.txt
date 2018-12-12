@@ -7,4 +7,4 @@
 django-simple-elasticsearch==2.0.0
 django==1.10.5
 elasticsearch==2.4.1      # via django-simple-elasticsearch
-urllib3==1.20             # via elasticsearch
+urllib3>=1.23             # via elasticsearch
